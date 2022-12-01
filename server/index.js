@@ -41,63 +41,31 @@ const DB = {
 			id: 999,
 			name: "Felipe",
 			active: true,
-			skills: [
-				{ name: "JS", pro: true },
-				{ name: "redux", pro: false },
-				{ name: "guitar", pro: true },
-				{ name: "chinese checkers", pro: false },
-			],
 		},
 		121: {
 			id: 121,
 			name: "Rafael",
 			active: true,
-			skills: [
-				{ name: "Cavaco", pro: false },
-				{ name: "Python", pro: true },
-				{ name: "R", pro: true },
-			],
 		},
 		122: {
 			id: 122,
 			name: "Fernando",
 			active: true,
-			skills: [
-				{ name: "Python", pro: true },
-				{ name: "markdown", pro: false },
-				{ name: "PowerBI", pro: true },
-				{ name: "volei", pro: false },
-			],
 		},
 		432: {
 			id: 432,
 			name: "Mari",
 			active: true,
-			skills: [
-				{ name: "Excel", pro: true },
-				{ name: "Powerpoint", pro: true },
-				{ name: "volei", pro: false },
-				{ name: "chinese checkers", pro: false },
-			],
 		},
 		555: {
 			id: 432,
 			name: "Rebeca",
 			active: true,
-			skills: [
-				{ name: "Python", pro: true },
-				{ name: "Excel", pro: true },
-			],
 		},
 		444: {
 			id: 432,
 			name: "Ni",
 			active: true,
-			skills: [
-				{ name: "JS", pro: true },
-				{ name: "redux", pro: false },
-				{ name: "chinese checkers", pro: true },
-			],
 		},
 	},
 	preferences: {
