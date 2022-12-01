@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { chatsApi } from "./chats";
+import { usersApi } from "./users";
 
-const store = configureStore({
-	preloadedState: {
-		user: {},
-		preferences: {},
-		chats: {},
+export const store = configureStore({
+	reducer: {
+		[usersApi.reducerPath]: usersApi.reducer,
+		[chatsApi.reducerPath]: chatsApi.reducer,
 	},
-	reducer: {},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(usersApi.middleware, chatsApi.middleware),
 });

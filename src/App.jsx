@@ -1,76 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
-// "/users",
-// "/users/:id",
-// "/users",
-// "/users/:id",
-// "/users/:id",
-// "/preferences",
-// "/preferences/:id",
-// "/preferences/:id",
-// "/chats",
-// "/chats/:id",
-// "/chats",
-// "/chats/:id",
-// /user-chats/999
-// "/messages",
-// "/messages/:id",
-// "/user-messages/:userId",
-// "/chat-messages/:chatId",
-// "/messages/:senderId",
-// "/messages/:id",
-// "/messages/:id";
+import { Provider } from "react-redux";
+import { useGetUserChatsQuery } from "./redux/chats";
+import { store } from "./redux/store";
+import { useGetUserByIdQuery } from "./redux/users";
 
-const store = {
-	user: {},
-	preferences: {},
-	chats: {},
-};
+function Chat() {
+	const [userId, setUserId] = useState(999);
 
-function App() {
-	const [userId, setUserId] = useState("999");
-	const [chatId, setChatId] = useState(null);
-	const [user, setUser] = useState(null);
-	const [chats, setChats] = useState([]);
-	// const [user, preferences, chats] = [
-	// 	fetch("http://localhost:8000/messages"),
-	// 	fetch("http://localhost:8000/messages"),
-	// 	fetch("http://localhost:8000/messages"),
-	// ];
-	const currChat = useMemo(() => {
-		return chats.find(c => c.id === chatId);
-	}, [chats, chatId]);
+	const { isLoading: userLoading, data: user } = useGetUserByIdQuery(userId);
 
-	useEffect(() => {
-		const fetchUser = async () => {
-			if (!userId) return;
+	const { isLoading: chatsLoading, data: chats } = useGetUserChatsQuery(userId);
 
-			try {
-				const data = await fetch(`http://localhost:8000/users/${userId}`).then(
-					res => res.json()
-				);
-				setUser(data);
-			} catch (err) {
-				// console.log(err);
-			}
-		};
-
-		const fetchUserChats = async () => {
-			if (!userId) return;
-
-			try {
-				const data = await fetch(
-					`http://localhost:8000/user-chats/${userId}`
-				).then(res => res.json());
-				setChatId(data[0].id);
-				setChats(data);
-			} catch (err) {
-				// console.log(err);
-			}
-		};
-
-		fetchUser();
-		fetchUserChats();
-	}, [userId]);
+	if (userLoading || chatsLoading) return <div>Loading...</div>;
 
 	return (
 		<div className="">
@@ -90,12 +31,13 @@ function App() {
 			</div>
 
 			<div className="grid grid-cols-6 h-[calc(100vh-200px)]">
-				<ul className="border col-start-1 col-end-3">
+				<ul className="col-start-1 col-end-3">
 					{chats.map(c => (
 						<li
 							key={c.id}
-							className="border overflow-clip"
-							onClick={() => setChatId(c.id)}>
+							className="overflow-clip"
+							// onClick={() => setChatId(c.id)}
+						>
 							<div>{c.name}</div>
 							<ul>
 								{c.participants.map(p => (
@@ -114,14 +56,36 @@ function App() {
 						</li>
 					))}
 				</ul>
+				{/* <pre>{JSON.stringify(chats, null, 2)}</pre> */}
 
-				<div className="border col-start-3 col-end-7 grow">
-					HELLO
-					<div>{chatId}</div>
-					<pre>{JSON.stringify(currChat, null, 2)}</pre>
+				<div className="col-start-3 col-end-7 grow">
+					{/* {messages.map(m => (
+						<div
+							className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
+							key={m.id}
+							style={{
+								background:
+									m.sender.id === +userId ? "rgb(21, 128, 61)" : "#444",
+								marginInline:
+									m.sender.id === +userId ? "auto 1rem" : "1rem auto",
+							}}>
+							<div>{m.sender.name}</div>
+							<div>{m.body}</div>
+							<small>{new Date(m.timestamp).toLocaleString()}</small>
+						</div>
+					))} */}
+					{/* <pre>{JSON.stringify(currChat, null, 2)}</pre> */}
 				</div>
 			</div>
 		</div>
+	);
+}
+
+function App() {
+	return (
+		<Provider store={store}>
+			<Chat />
+		</Provider>
 	);
 }
 
