@@ -1,12 +1,42 @@
 import { useEffect } from "react";
+// "/users",
+// "/users/:id",
+// "/users",
+// "/users/:id",
+// "/users/:id",
+// "/preferences",
+// "/preferences/:id",
+// "/preferences/:id",
+// "/chats",
+// "/chats/:id",
+// "/chats",
+// "/chats/:id",
+// "/chats/:id",
+// "/messages",
+// "/messages/:id",
+// "/user-messages/:userId",
+// "/chat-messages/:chatId",
+// "/messages/:senderId",
+// "/messages/:id",
+// "/messages/:id";
+
+const store = {
+	user: {},
+	preferences: {},
+	chats: {},
+};
 
 function App() {
-	useEffect(() => {
-		fetch("http://localhost:8000").then(r => console.log(r));
+	useEffect(async () => {
+		const [user, preferences, chats] = [
+			fetch("http://localhost:8000/messages"),
+			fetch("http://localhost:8000/messages"),
+			fetch("http://localhost:8000/messages"),
+		];
 	}, []);
 	return (
 		<div className="h-screen bg-gray-700">
-			<h1 className="text-white">React Redux</h1>
+			<div></div>
 		</div>
 	);
 }
