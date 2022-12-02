@@ -12,7 +12,15 @@ export const messagesApi = createApi({
 			query: chatId => `chat-messages/${chatId}`,
 			providesTags: (result, error, chatId) => [{ type: "Messages", chatId }],
 		}),
+		postMessage: builder.mutation({
+			query: body => ({
+				url: `messages/${body.userId}`,
+				method: "POST",
+				body,
+			}),
+		}),
 	}),
 });
 
-export const { useGetAllMessagesQuery, useGetChatMessagesQuery } = messagesApi;
+export const { useGetAllMessagesQuery, useGetChatMessagesQuery, usePostMessageMutation } =
+	messagesApi;

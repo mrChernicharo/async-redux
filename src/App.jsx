@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { useGetUserByIdQuery } from "./redux/users";
 import { useGetUserChatsQuery } from "./redux/chats";
-import { useGetChatMessagesQuery } from "./redux/messages";
+import { useGetChatMessagesQuery, usePostMessageMutation } from "./redux/messages";
 
 function Roster({ userId, chatId, setChatId }) {
 	const { isLoading: chatsLoading, data: chats } = useGetUserChatsQuery(userId);
@@ -78,7 +78,7 @@ function Messages({ userId, chatId }) {
 		<div className="border col-start-3 col-end-7 grow">
 			<MessagesDisplay userId={userId} messages={messages} />
 
-			<MessageInput />
+			<MessageInput userId={userId} chatId={chatId} />
 		</div>
 	);
 }
@@ -108,8 +108,17 @@ function Message({ message, userId }) {
 	);
 }
 
-function MessageInput() {
+function MessageInput({ userId, chatId }) {
 	const textRef = useRef(null);
+
+	const [
+		postMessage, // This is the mutation trigger
+		{ isLoading: isSending, isSuccess, data: sentMessage }, // This is the destructured mutation result
+	] = usePostMessageMutation();
+
+	if (isSuccess) {
+		console.log({ sentMessage });
+	}
 
 	return (
 		<div className="h-[200px]">
@@ -123,9 +132,9 @@ function MessageInput() {
 				<button
 					className="w-16 mt-2 mr-2 rounded-full bg-cyan-700 p-1"
 					onClick={() => {
-						console.log(textRef.current.value);
+						postMessage({ userId, chatId, body: textRef.current.value });
 					}}>
-					Send
+					{isSending ? "Sending..." : "Send"}
 				</button>
 			</div>
 		</div>

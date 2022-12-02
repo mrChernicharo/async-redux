@@ -205,7 +205,7 @@ const DB = {
 		6: {
 			id: 6,
 			chatId: 3,
-			body: "Quem vai no samba essa esxta?",
+			body: "Quem vai no samba essa sexta?",
 			timestamp: 1_669_866_633_422,
 			sender: { id: 432, name: "Mari" },
 		},
