@@ -10,7 +10,7 @@ export const messagesApi = createApi({
 		}),
 		getChatMessages: builder.query({
 			query: chatId => `chat-messages/${chatId}`,
-			providesTags: (result, error, chatId) => [{ type: "Messages", chatId }],
+			providesTags: (result, error, chatId) => [{ type: "Messages", id: "LIST" }],
 		}),
 		postMessage: builder.mutation({
 			query: body => ({
@@ -18,6 +18,7 @@ export const messagesApi = createApi({
 				method: "POST",
 				body,
 			}),
+			invalidatesTags: [{ type: "Messages", id: "LIST" }],
 		}),
 	}),
 });

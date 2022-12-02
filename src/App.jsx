@@ -85,7 +85,7 @@ function Messages({ userId, chatId }) {
 
 function MessagesDisplay({ userId, messages }) {
 	return (
-		<div className="h-[calc(100%-200px)]">
+		<div className="border h-[calc(100vh-400px)] overflow-y-scroll">
 			{messages.map(message => (
 				<Message key={message.id} message={message} userId={userId} />
 			))}
@@ -98,8 +98,8 @@ function Message({ message, userId }) {
 		<div
 			className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
 			style={{
-				background: message.sender.id === +userId ? "rgb(21, 128, 61)" : "#444",
-				marginInline: message.sender.id === +userId ? "auto 1rem" : "1rem auto",
+				background: message.sender.id == userId ? "rgb(21, 128, 61)" : "#444",
+				marginInline: message.sender.id == userId ? "auto 1rem" : "1rem auto",
 			}}>
 			<div>{message.sender.name}</div>
 			<div>{message.body}</div>
@@ -121,8 +121,8 @@ function MessageInput({ userId, chatId }) {
 	}
 
 	return (
-		<div className="h-[200px]">
-			<div className="h-[135px]">
+		<div className="h-[100px]">
+			<div className="h-[150px]">
 				<textarea
 					ref={textRef}
 					className="w-full h-full bg-slate-600 resize-none"
