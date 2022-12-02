@@ -16,7 +16,15 @@ function Chat() {
 	const { isLoading: messagesLoading, data: messages } =
 		useGetChatMessagesQuery(chatId);
 
-	if (userLoading || chatsLoading) return <div>Loading...</div>;
+	useEffect(() => {
+		if (chats && chats[0]) {
+			console.log({ user, chats, id: chats[0].id });
+			setChatId(chats[0].id);
+		}
+	}, [chats, user]);
+
+	if (userLoading || chatsLoading || messagesLoading) return <div>Loading...</div>;
+
 	return (
 		<div className="">
 			<div className="h-[200px]">
@@ -28,44 +36,44 @@ function Chat() {
 					className="w-20 bg-slate-500"
 					defaultValue={userId}
 					onChange={e => {
+						setChatId(null);
 						setUserId(e.target.value);
 					}}
 				/>
-				<pre>{JSON.stringify(user, null, 2)}</pre>
+				<pre>{userId && JSON.stringify(user, null, 2)}</pre>
 			</div>
 
 			<div className="grid grid-cols-6 h-[calc(100vh-200px)]">
-				{chatId}
+				Chat id: {chatId}
 				<ul className="col-start-1 col-end-3">
-					{chats.map(c => (
-						<li
-							key={c.id}
-							className="overflow-clip"
-							onClick={() => setChatId(c.id)}>
-							<div>{c.name}</div>
-							<ul>
-								{c.participants.map(p => (
-									<li
-										key={`${c.id}-${p.id}`}
-										className="flex items-center">
-										<div className="w-8 h-8 bg-cyan-600 rounded-full flex-none">
-											<div className="h-8 text-xs flex items-center justify-center">
-												{p.id}
+					{/* <pre>{JSON.stringify(chats, null, 2)}</pre> */}
+					{user &&
+						chats.map(c => (
+							<li
+								key={c.id}
+								className="overflow-clip"
+								onClick={() => setChatId(c.id)}>
+								<div>{c.name}</div>
+								<ul>
+									{c.participants.map(p => (
+										<li
+											key={`${c.id}-${p.id}`}
+											className="flex items-center">
+											<div className="w-8 h-8 bg-cyan-600 rounded-full flex-none">
+												<div className="h-8 text-xs flex items-center justify-center">
+													{p.id}
+												</div>
 											</div>
-										</div>
-										<div className="ml-2">{p.name}</div>
-									</li>
-								))}
-							</ul>
-						</li>
-					))}
+											<div className="ml-2">{p.name}</div>
+										</li>
+									))}
+								</ul>
+							</li>
+						))}
 				</ul>
-
 				<div className="col-start-3 col-end-7 grow">
-					{messagesLoading ? (
-						<div>Loading...</div>
-					) : (
-						// <pre>{JSON.stringify(messages, null, 2)}</pre>
+					{/* <pre>{JSON.stringify(messages, null, 2)}</pre> */}
+					{user &&
 						messages.map(m => (
 							<div
 								className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
@@ -84,8 +92,8 @@ function Chat() {
 								<div>{m.body}</div>
 								<small>{new Date(m.timestamp).toLocaleString()}</small>
 							</div>
-						))
-					)}
+						))}
+
 					{/* */}
 					{/* <pre>{JSON.stringify(currChat, null, 2)}</pre> */}
 				</div>
