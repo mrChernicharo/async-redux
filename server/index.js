@@ -400,7 +400,7 @@ app.get("/user-messages/:userId", (req, res) => {
 app.get("/chat-messages/:chatId", (req, res) => {
 	const messages = toArray(DB.messages).filter(m => m.chatId === +req.params.chatId);
 
-	res.status(200).send({ messages });
+	res.status(200).send(messages);
 });
 
 app.post("/messages/:senderId", (req, res) => {

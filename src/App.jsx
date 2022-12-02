@@ -1,18 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { Provider } from "react-redux";
-import { useGetUserChatsQuery } from "./redux/chats";
 import { store } from "./redux/store";
 import { useGetUserByIdQuery } from "./redux/users";
+import { useGetUserChatsQuery } from "./redux/chats";
+import { useGetChatMessagesQuery } from "./redux/messages";
 
 function Chat() {
 	const [userId, setUserId] = useState(999);
+	const [chatId, setChatId] = useState(0);
 
 	const { isLoading: userLoading, data: user } = useGetUserByIdQuery(userId);
 
 	const { isLoading: chatsLoading, data: chats } = useGetUserChatsQuery(userId);
 
-	if (userLoading || chatsLoading) return <div>Loading...</div>;
+	const { isLoading: messagesLoading, data: messages } =
+		useGetChatMessagesQuery(chatId);
 
+	if (userLoading || chatsLoading) return <div>Loading...</div>;
 	return (
 		<div className="">
 			<div className="h-[200px]">
@@ -31,13 +35,13 @@ function Chat() {
 			</div>
 
 			<div className="grid grid-cols-6 h-[calc(100vh-200px)]">
+				{chatId}
 				<ul className="col-start-1 col-end-3">
 					{chats.map(c => (
 						<li
 							key={c.id}
 							className="overflow-clip"
-							// onClick={() => setChatId(c.id)}
-						>
+							onClick={() => setChatId(c.id)}>
 							<div>{c.name}</div>
 							<ul>
 								{c.participants.map(p => (
@@ -56,24 +60,33 @@ function Chat() {
 						</li>
 					))}
 				</ul>
-				{/* <pre>{JSON.stringify(chats, null, 2)}</pre> */}
 
 				<div className="col-start-3 col-end-7 grow">
-					{/* {messages.map(m => (
-						<div
-							className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
-							key={m.id}
-							style={{
-								background:
-									m.sender.id === +userId ? "rgb(21, 128, 61)" : "#444",
-								marginInline:
-									m.sender.id === +userId ? "auto 1rem" : "1rem auto",
-							}}>
-							<div>{m.sender.name}</div>
-							<div>{m.body}</div>
-							<small>{new Date(m.timestamp).toLocaleString()}</small>
-						</div>
-					))} */}
+					{messagesLoading ? (
+						<div>Loading...</div>
+					) : (
+						// <pre>{JSON.stringify(messages, null, 2)}</pre>
+						messages.map(m => (
+							<div
+								className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
+								key={m.id}
+								style={{
+									background:
+										m.sender.id === +userId
+											? "rgb(21, 128, 61)"
+											: "#444",
+									marginInline:
+										m.sender.id === +userId
+											? "auto 1rem"
+											: "1rem auto",
+								}}>
+								<div>{m.sender.name}</div>
+								<div>{m.body}</div>
+								<small>{new Date(m.timestamp).toLocaleString()}</small>
+							</div>
+						))
+					)}
+					{/* */}
 					{/* <pre>{JSON.stringify(currChat, null, 2)}</pre> */}
 				</div>
 			</div>
