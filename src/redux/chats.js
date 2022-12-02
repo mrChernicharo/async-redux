@@ -9,7 +9,7 @@ export const chatsApi = createApi({
 			providesTags: (result, error) => ["Chats"],
 		}),
 		getUserChats: builder.query({
-			query: userId => userId && `user-chats/${userId}`,
+			query: userId => `user-chats/${userId}`,
 			providesTags: (result, error, userId) => [{ type: "Chats", userId }],
 		}),
 	}),
