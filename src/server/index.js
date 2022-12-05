@@ -1,13 +1,20 @@
-import express, { json } from 'express';
-import cors from 'cors';
+import express, { json } from "express";
+import cors from "cors";
 
-const app = express();
+export const app = express();
 app.use(cors());
 app.use(json());
 app.use(logger);
 
 function toArray(obj) {
 	return Object.values(obj).map(v => v);
+}
+
+function patchObject(obj, patch) {
+	for (let k in patch) {
+		if (typeof patch[k] !== "object") obj[k] = patch[k];
+		else patchObject(obj[k], patch[k]);
+	}
 }
 
 function logger(req, res, next) {
@@ -22,57 +29,48 @@ function logger(req, res, next) {
 		host,
 		body,
 	};
-
-	console.log({ log });
-
+	// console.log({ log });
 	next();
-}
-
-function patchObject(obj, patch) {
-	for (let k in patch) {
-		if (typeof patch[k] !== 'object') obj[k] = patch[k];
-		else patchObject(obj[k], patch[k]);
-	}
 }
 
 const DB = {
 	users: {
 		999: {
 			id: 999,
-			name: 'Felipe',
+			name: "Felipe",
 			active: true,
 		},
 		121: {
 			id: 121,
-			name: 'Rafael',
+			name: "Rafael",
 			active: true,
 		},
 		122: {
 			id: 122,
-			name: 'Fernando',
+			name: "Fernando",
 			active: true,
 		},
 		432: {
 			id: 432,
-			name: 'Mari',
+			name: "Mari",
 			active: true,
 		},
 		555: {
 			id: 555,
-			name: 'Rebeca',
+			name: "Rebeca",
 			active: true,
 		},
 		444: {
 			id: 444,
-			name: 'Ni',
+			name: "Ni",
 			active: true,
 		},
 	},
 	preferences: {
 		0: {
 			userId: 999,
-			order: 'aToZ',
-			displayDensity: 'compact',
+			order: "aToZ",
+			displayDensity: "compact",
 			notifications: {
 				volume: 127,
 				mute: false,
@@ -80,8 +78,8 @@ const DB = {
 		},
 		1: {
 			userId: 121,
-			order: 'recent',
-			displayDensity: 'comfortable',
+			order: "recent",
+			displayDensity: "comfortable",
 			notifications: {
 				volume: 110,
 				mute: false,
@@ -89,8 +87,8 @@ const DB = {
 		},
 		2: {
 			userId: 122,
-			order: 'aToZ',
-			displayDensity: 'comfortable',
+			order: "aToZ",
+			displayDensity: "comfortable",
 			notifications: {
 				volume: 127,
 				mute: true,
@@ -98,8 +96,8 @@ const DB = {
 		},
 		3: {
 			userId: 432,
-			order: 'recent',
-			displayDensity: 'compact',
+			order: "recent",
+			displayDensity: "compact",
 			notifications: {
 				volume: 90,
 				mute: false,
@@ -107,8 +105,8 @@ const DB = {
 		},
 		4: {
 			userId: 555,
-			order: 'recent',
-			displayDensity: 'minimal',
+			order: "recent",
+			displayDensity: "minimal",
 			notifications: {
 				volume: 120,
 				mute: true,
@@ -116,8 +114,8 @@ const DB = {
 		},
 		5: {
 			userId: 444,
-			order: 'aToZ',
-			displayDensity: 'comfortable',
+			order: "aToZ",
+			displayDensity: "comfortable",
 			notifications: {
 				volume: 83,
 				mute: false,
@@ -127,35 +125,35 @@ const DB = {
 	chats: {
 		0: {
 			id: 0,
-			name: 'only me',
-			participants: [{ id: 999, name: 'Felipe' }],
+			name: "only me",
+			participants: [{ id: 999, name: "Felipe" }],
 		},
 		1: {
 			id: 1,
-			name: 'Mari and I',
+			name: "Mari and I",
 			participants: [
-				{ id: 999, name: 'Felipe' },
-				{ id: 432, name: 'Mari' },
+				{ id: 999, name: "Felipe" },
+				{ id: 432, name: "Mari" },
 			],
 		},
 		2: {
 			id: 2,
-			name: 'Samba group',
+			name: "Samba group",
 			participants: [
-				{ id: 999, name: 'Felipe' },
-				{ id: 121, name: 'Rafael' },
-				{ id: 432, name: 'Mari' },
-				{ id: 122, name: 'Fernando' },
-				{ id: 555, name: 'Rebeca' },
+				{ id: 999, name: "Felipe" },
+				{ id: 121, name: "Rafael" },
+				{ id: 432, name: "Mari" },
+				{ id: 122, name: "Fernando" },
+				{ id: 555, name: "Rebeca" },
 			],
 		},
 		3: {
 			id: 3,
-			name: 'Girls group',
+			name: "Girls group",
 			participants: [
-				{ id: 432, name: 'Mari' },
-				{ id: 555, name: 'Rebeca' },
-				{ id: 444, name: 'Ni' },
+				{ id: 432, name: "Mari" },
+				{ id: 555, name: "Rebeca" },
+				{ id: 444, name: "Ni" },
 			],
 		},
 	},
@@ -163,130 +161,130 @@ const DB = {
 		0: {
 			id: 0,
 			chatId: 0,
-			body: 'Some Code',
+			body: "Some Code",
 			timestamp: 1_669_866_573_422,
-			sender: { id: 999, name: 'Felipe' },
+			sender: { id: 999, name: "Felipe" },
 		},
 		1: {
 			id: 1,
 			chatId: 1,
-			body: 'Oi Amor!',
+			body: "Oi Amor!",
 			timestamp: 1669866583422,
-			sender: { id: 999, name: 'Felipe' },
+			sender: { id: 999, name: "Felipe" },
 		},
 		2: {
 			id: 2,
 			chatId: 2,
-			body: 'Bora agitar um samba essa sexta?',
+			body: "Bora agitar um samba essa sexta?",
 			timestamp: 1669866593422,
-			sender: { id: 121, name: 'Rafael' },
+			sender: { id: 121, name: "Rafael" },
 		},
 		3: {
 			id: 3,
 			chatId: 2,
-			body: 'Pilho!',
+			body: "Pilho!",
 			timestamp: 1669866603422,
-			sender: { id: 999, name: 'Felipe' },
+			sender: { id: 999, name: "Felipe" },
 		},
 		4: {
 			id: 4,
 			chatId: 2,
-			body: 'Vou levar o pandeiro!',
+			body: "Vou levar o pandeiro!",
 			timestamp: 1669866613422,
-			sender: { id: 122, name: 'Fernando' },
+			sender: { id: 122, name: "Fernando" },
 		},
 		5: {
 			id: 5,
 			chatId: 1,
-			body: 'Oi Bichinho! ❤️',
+			body: "Oi Bichinho! ❤️",
 			timestamp: 1669866623422,
-			sender: { id: 432, name: 'Mari' },
+			sender: { id: 432, name: "Mari" },
 		},
 		6: {
 			id: 6,
 			chatId: 3,
-			body: 'Quem vai no samba essa sexta?',
+			body: "Quem vai no samba essa sexta?",
 			timestamp: 1_669_866_633_422,
-			sender: { id: 432, name: 'Mari' },
+			sender: { id: 432, name: "Mari" },
 		},
 		7: {
 			id: 7,
 			chatId: 3,
-			body: 'Eu vou!',
+			body: "Eu vou!",
 			timestamp: 1_669_866_643_422,
-			sender: { id: 444, name: 'Ni' },
+			sender: { id: 444, name: "Ni" },
 		},
 
 		8: {
 			id: 8,
 			chatId: 2,
-			body: 'Aí sim!!!',
+			body: "Aí sim!!!",
 			timestamp: 1669990871337,
-			sender: { id: '999', name: 'Felipe' },
+			sender: { id: "999", name: "Felipe" },
 		},
 		9: {
 			id: 9,
 			chatId: 2,
-			body: 'Vai ficar bonito',
+			body: "Vai ficar bonito",
 			timestamp: 1669990879513,
-			sender: { id: '999', name: 'Felipe' },
+			sender: { id: "999", name: "Felipe" },
 		},
 
 		10: {
 			id: 10,
 			chatId: 2,
-			body: 'Que horas gente?\n',
+			body: "Que horas gente?\n",
 			timestamp: 1669990921275,
-			sender: { id: '555', name: 'Rebeca' },
+			sender: { id: "555", name: "Rebeca" },
 		},
 		11: {
 			id: 11,
 			chatId: 2,
-			body: 'umas 18h tá bom?',
+			body: "umas 18h tá bom?",
 			timestamp: 1669990938658,
-			sender: { id: '121', name: 'Rafael' },
+			sender: { id: "121", name: "Rafael" },
 		},
 		14: {
 			id: 14,
 			chatId: 2,
-			body: 'Maravilha! \n',
+			body: "Maravilha! \n",
 			timestamp: 1669991000313,
-			sender: { id: '555', name: 'Rebeca' },
+			sender: { id: "555", name: "Rebeca" },
 		},
 		15: {
 			id: 15,
 			chatId: 2,
-			body: 'Já vou começar a ajeitar o repertório!',
+			body: "Já vou começar a ajeitar o repertório!",
 			timestamp: 1669991062802,
-			sender: { id: '999', name: 'Felipe' },
+			sender: { id: "999", name: "Felipe" },
 		},
 		16: {
 			id: 16,
 			chatId: 3,
-			body: 'Ai gente, eu trabalho sábado de manhã 🤦🏽\n',
+			body: "Ai gente, eu trabalho sábado de manhã 🤦🏽\n",
 			timestamp: 1669991351413,
-			sender: { id: '555', name: 'Rebeca' },
+			sender: { id: "555", name: "Rebeca" },
 		},
 		17: {
 			id: 17,
 			chatId: 3,
-			body: 'Mas, q se dane!',
+			body: "Mas, q se dane!",
 			timestamp: 1669991360191,
-			sender: { id: '555', name: 'Rebeca' },
+			sender: { id: "555", name: "Rebeca" },
 		},
 		18: {
 			id: 18,
 			chatId: 3,
-			body: 'Bora pro samba!',
+			body: "Bora pro samba!",
 			timestamp: 1669991366805,
-			sender: { id: '555', name: 'Rebeca' },
+			sender: { id: "555", name: "Rebeca" },
 		},
 		19: {
 			id: 19,
 			chatId: 2,
-			body: 'E aí pessoal, quando vamos fazer o próximo?',
+			body: "E aí pessoal, quando vamos fazer o próximo?",
 			timestamp: 1669992366805,
-			sender: { id: '122', name: 'Fernando' },
+			sender: { id: "122", name: "Fernando" },
 		},
 	},
 };
@@ -307,15 +305,15 @@ let currMsgId = toArray(DB.messages).length;
 // 		{ name: "guitar", pro: true },
 // 	],
 // }
-app.get('/users', (req, res) => {
+app.get("/users", (req, res) => {
 	res.status(200).send(DB.users);
 });
 
-app.get('/users/:id', (req, res) => {
+app.get("/users/:id", (req, res) => {
 	res.status(200).send(DB.users[req.params.id]);
 });
 
-app.post('/users', (req, res) => {
+app.post("/users", (req, res) => {
 	const newUser = {
 		id,
 		name: req.body.name,
@@ -324,8 +322,8 @@ app.post('/users', (req, res) => {
 	};
 	const newPreferences = {
 		userId,
-		order: 'aToZ',
-		displayDensity: 'comfortable',
+		order: "aToZ",
+		displayDensity: "comfortable",
 		notifications: {
 			volume: 100,
 			mute: false,
@@ -337,7 +335,7 @@ app.post('/users', (req, res) => {
 	res.status(200).send(newUser);
 });
 
-app.patch('/users/:id', (req, res) => {
+app.patch("/users/:id", (req, res) => {
 	const { id } = req.params;
 	const updatedUser = { ...DB.users[id], ...req.body };
 	DB.users[id] = { ...updatedUser };
@@ -347,7 +345,7 @@ app.patch('/users/:id', (req, res) => {
 	});
 });
 
-app.delete('/users/:id', (req, res) => {
+app.delete("/users/:id", (req, res) => {
 	const deletedUser = DB.users[req.params.id];
 	delete DB.users[req.params.id];
 
@@ -364,15 +362,15 @@ app.delete('/users/:id', (req, res) => {
 // 		mute: false,
 // 	},
 // },
-app.get('/preferences', (req, res) => {
+app.get("/preferences", (req, res) => {
 	res.status(200).send(DB.preferences);
 });
 
-app.get('/preferences/:id', (req, res) => {
+app.get("/preferences/:id", (req, res) => {
 	res.status(200).send(DB.preferences[req.params.id]);
 });
 
-app.patch('/preferences/:id', (req, res) => {
+app.patch("/preferences/:id", (req, res) => {
 	const { id } = req.params;
 
 	patchObject(DB.preferences[id], req.body);
@@ -391,32 +389,32 @@ app.patch('/preferences/:id', (req, res) => {
 // 		{ id: 432, name: "Mari" },
 // 	],
 // },
-app.get('/chats', (req, res) => {
+app.get("/chats", (req, res) => {
 	res.status(200).send(DB.chats);
 });
 
-app.get('/chats/:id', (req, res) => {
+app.get("/chats/:id", (req, res) => {
 	res.status(200).send(DB.chats[req.params.id]);
 });
 
-app.get('/user-chats/:userId', (req, res) => {
+app.get("/user-chats/:userId", (req, res) => {
 	const userChats = toArray(DB.chats).filter(c =>
 		c.participants.find(p => p.id === +req.params.userId)
 	);
 
-	console.log({ userChats, chats: DB.chats, arrayChats: toArray(DB.chats) });
+	// console.log({ userChats, chats: DB.chats, arrayChats: toArray(DB.chats) });
 
 	res.status(200).send(userChats);
 });
 
-app.post('/chats', (req, res) => {
+app.post("/chats", (req, res) => {
 	const id = currChatId++;
 	const { userId } = req.body;
 
 	const newChat = {
 		userId,
-		order: 'aToZ',
-		displayDensity: 'comfortable',
+		order: "aToZ",
+		displayDensity: "comfortable",
 		notifications: {
 			volume: 100,
 			mute: false,
@@ -427,7 +425,7 @@ app.post('/chats', (req, res) => {
 	res.status(200).send(newChat);
 });
 
-app.patch('/chats/:id', (req, res) => {
+app.patch("/chats/:id", (req, res) => {
 	const { id } = req.params;
 	const updatedChat = { ...DB.chats[id], ...req.body };
 	DB.chats[id] = { ...updatedChat };
@@ -437,7 +435,7 @@ app.patch('/chats/:id', (req, res) => {
 	});
 });
 
-app.delete('/chats/:id', (req, res) => {
+app.delete("/chats/:id", (req, res) => {
 	const deletedUser = DB.chats[req.params.id];
 	delete DB.chats[req.params.id];
 
@@ -452,35 +450,31 @@ app.delete('/chats/:id', (req, res) => {
 // 	timestamp: 1_669_866_643_422,
 // 	sender: { id: 444, name: "Ni" },
 // },
-app.get('/messages', (req, res) => {
+app.get("/messages", (req, res) => {
 	// res.status(200).send(DB.messages);
 	const messages = toArray(DB.messages);
 
 	res.status(200).send({ messages });
 });
 
-app.get('/messages/:id', (req, res) => {
+app.get("/messages/:id", (req, res) => {
 	res.status(200).send(DB.messages[req.params.id]);
 });
 
-app.get('/user-messages/:userId', (req, res) => {
-	const messages = toArray(DB.messages).filter(
-		m => m.sender.id === +req.params.userId
-	);
+app.get("/user-messages/:userId", (req, res) => {
+	const messages = toArray(DB.messages).filter(m => m.sender.id === +req.params.userId);
 
 	res.status(200).send({ messages });
 });
 
-app.get('/chat-messages/:chatId', (req, res) => {
-	const messages = toArray(DB.messages).filter(
-		m => m.chatId === +req.params.chatId
-	);
+app.get("/chat-messages/:chatId", (req, res) => {
+	const messages = toArray(DB.messages).filter(m => m.chatId === +req.params.chatId);
 
 	res.status(200).send(messages);
 });
 
-app.post('/messages/:senderId', (req, res) => {
-	console.log(req.body);
+app.post("/messages/:senderId", (req, res) => {
+	// console.log(req.body);
 	const { senderId } = req.params;
 	const { chatId, body } = req.body;
 	const sender = DB.users[senderId];
@@ -501,7 +495,7 @@ app.post('/messages/:senderId', (req, res) => {
 	res.status(200).send(newMessage);
 });
 
-app.patch('/messages/:id', (req, res) => {
+app.patch("/messages/:id", (req, res) => {
 	const { id } = req.params;
 
 	const updatedMessage = { ...DB.messages[id], ...req.body };
@@ -513,7 +507,7 @@ app.patch('/messages/:id', (req, res) => {
 	});
 });
 
-app.delete('/messages/:id', (req, res) => {
+app.delete("/messages/:id", (req, res) => {
 	const { id } = req.params;
 
 	const deletedMessage = DB.messages[id];
@@ -526,5 +520,5 @@ app.delete('/messages/:id', (req, res) => {
 });
 
 app.listen(8000, () => {
-	console.log('listening on port 8000');
+	console.log("listening on port 8000");
 });

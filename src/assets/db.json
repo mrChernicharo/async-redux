@@ -1,0 +1,211 @@
+{
+	"users": {
+		"121": { "id": 121, "name": "Rafael", "active": true },
+		"122": { "id": 122, "name": "Fernando", "active": true },
+		"432": { "id": 432, "name": "Mari", "active": true },
+		"444": { "id": 444, "name": "Ni", "active": true },
+		"555": { "id": 555, "name": "Rebeca", "active": true },
+		"999": { "id": 999, "name": "Felipe", "active": true }
+	},
+	"preferences": {
+		"0": {
+			"userId": 999,
+			"order": "aToZ",
+			"displayDensity": "compact",
+			"notifications": { "volume": 127, "mute": false }
+		},
+		"1": {
+			"userId": 121,
+			"order": "recent",
+			"displayDensity": "comfortable",
+			"notifications": { "volume": 110, "mute": false }
+		},
+		"2": {
+			"userId": 122,
+			"order": "aToZ",
+			"displayDensity": "comfortable",
+			"notifications": { "volume": 127, "mute": true }
+		},
+		"3": {
+			"userId": 432,
+			"order": "recent",
+			"displayDensity": "compact",
+			"notifications": { "volume": 90, "mute": false }
+		},
+		"4": {
+			"userId": 555,
+			"order": "recent",
+			"displayDensity": "minimal",
+			"notifications": { "volume": 120, "mute": true }
+		},
+		"5": {
+			"userId": 444,
+			"order": "aToZ",
+			"displayDensity": "comfortable",
+			"notifications": { "volume": 83, "mute": false }
+		}
+	},
+	"chats": {
+		"0": {
+			"id": 0,
+			"name": "only me",
+			"participants": [{ "id": 999, "name": "Felipe" }]
+		},
+		"1": {
+			"id": 1,
+			"name": "Mari and I",
+			"participants": [
+				{ "id": 999, "name": "Felipe" },
+				{ "id": 432, "name": "Mari" }
+			]
+		},
+		"2": {
+			"id": 2,
+			"name": "Samba group",
+			"participants": [
+				{ "id": 999, "name": "Felipe" },
+				{ "id": 121, "name": "Rafael" },
+				{ "id": 432, "name": "Mari" },
+				{ "id": 122, "name": "Fernando" },
+				{ "id": 555, "name": "Rebeca" }
+			]
+		},
+		"3": {
+			"id": 3,
+			"name": "Girls group",
+			"participants": [
+				{ "id": 432, "name": "Mari" },
+				{ "id": 555, "name": "Rebeca" },
+				{ "id": 444, "name": "Ni" }
+			]
+		}
+	},
+	"messages": {
+		"0": {
+			"id": 0,
+			"chatId": 0,
+			"body": "Some Code",
+			"timestamp": 1669866573422,
+			"sender": { "id": 999, "name": "Felipe" }
+		},
+		"1": {
+			"id": 1,
+			"chatId": 1,
+			"body": "Oi Amor!",
+			"timestamp": 1669866583422,
+			"sender": { "id": 999, "name": "Felipe" }
+		},
+		"2": {
+			"id": 2,
+			"chatId": 2,
+			"body": "Bora agitar um samba essa sexta?",
+			"timestamp": 1669866593422,
+			"sender": { "id": 121, "name": "Rafael" }
+		},
+		"3": {
+			"id": 3,
+			"chatId": 2,
+			"body": "Pilho!",
+			"timestamp": 1669866603422,
+			"sender": { "id": 999, "name": "Felipe" }
+		},
+		"4": {
+			"id": 4,
+			"chatId": 2,
+			"body": "Vou levar o pandeiro!",
+			"timestamp": 1669866613422,
+			"sender": { "id": 122, "name": "Fernando" }
+		},
+		"5": {
+			"id": 5,
+			"chatId": 1,
+			"body": "Oi Bichinho! ❤️",
+			"timestamp": 1669866623422,
+			"sender": { "id": 432, "name": "Mari" }
+		},
+		"6": {
+			"id": 6,
+			"chatId": 3,
+			"body": "Quem vai no samba essa sexta?",
+			"timestamp": 1669866633422,
+			"sender": { "id": 432, "name": "Mari" }
+		},
+		"7": {
+			"id": 7,
+			"chatId": 3,
+			"body": "Eu vou!",
+			"timestamp": 1669866643422,
+			"sender": { "id": 444, "name": "Ni" }
+		},
+		"8": {
+			"id": 8,
+			"chatId": 2,
+			"body": "Aí sim!!!",
+			"timestamp": 1669990871337,
+			"sender": { "id": "999", "name": "Felipe" }
+		},
+		"9": {
+			"id": 9,
+			"chatId": 2,
+			"body": "Vai ficar bonito",
+			"timestamp": 1669990879513,
+			"sender": { "id": "999", "name": "Felipe" }
+		},
+		"10": {
+			"id": 10,
+			"chatId": 2,
+			"body": "Que horas gente?\n",
+			"timestamp": 1669990921275,
+			"sender": { "id": "555", "name": "Rebeca" }
+		},
+		"11": {
+			"id": 11,
+			"chatId": 2,
+			"body": "umas 18h tá bom?",
+			"timestamp": 1669990938658,
+			"sender": { "id": "121", "name": "Rafael" }
+		},
+		"14": {
+			"id": 14,
+			"chatId": 2,
+			"body": "Maravilha! \n",
+			"timestamp": 1669991000313,
+			"sender": { "id": "555", "name": "Rebeca" }
+		},
+		"15": {
+			"id": 15,
+			"chatId": 2,
+			"body": "Já vou começar a ajeitar o repertório!",
+			"timestamp": 1669991062802,
+			"sender": { "id": "999", "name": "Felipe" }
+		},
+		"16": {
+			"id": 16,
+			"chatId": 3,
+			"body": "Ai gente, eu trabalho sábado de manhã 🤦🏽\n",
+			"timestamp": 1669991351413,
+			"sender": { "id": "555", "name": "Rebeca" }
+		},
+		"17": {
+			"id": 17,
+			"chatId": 3,
+			"body": "Mas, q se dane!",
+			"timestamp": 1669991360191,
+			"sender": { "id": "555", "name": "Rebeca" }
+		},
+		"18": {
+            "id": 18,
+			"chatId": 2,
+			"body": "E aí pessoal, quando vamos fazer o próximo?",
+			"timestamp": 1669992366805,
+			"sender": { "id": "122", "name": "Fernando" }
+		},
+        "19": {
+            "id": 19,
+            "chatId": 2,
+            "body": "my test message",
+            "timestamp": 1670283420031,
+            "sender": { "id": "999", "name": "Felipe" }
+        }
+	}
+}

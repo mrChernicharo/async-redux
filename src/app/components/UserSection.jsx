@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setChatId, setUserId } from '../redux/appState';
-import { useGetUserChatsQuery } from '../redux/chats';
-import { useGetUserByIdQuery } from '../redux/users';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setChatId, setUserId } from "../redux/appState";
+import { useGetUserChatsQuery } from "../redux/chats";
+import { useGetUserByIdQuery } from "../redux/users";
 
 function UserSection() {
 	const dispatch = useDispatch();
@@ -10,8 +10,7 @@ function UserSection() {
 	const userId = useSelector(state => state.appState.userId);
 
 	const { isLoading: userLoading, data: user } = useGetUserByIdQuery(userId);
-	const { isLoading: chatsLoading, data: chats } =
-		useGetUserChatsQuery(userId);
+	const { isLoading: chatsLoading, data: chats } = useGetUserChatsQuery(userId);
 
 	useEffect(() => {
 		if (user && chats[0]) {
@@ -28,7 +27,7 @@ function UserSection() {
 			<div className="flex justify-between">
 				<div>{user?.name}</div>
 				<label htmlFor="user-id">
-					user id:{' '}
+					user id:{" "}
 					<input
 						id="user-id"
 						className="w-20 bg-slate-600"
