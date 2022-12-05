@@ -284,10 +284,10 @@ const DB = {
 	},
 };
 
-let currPreferencesId = 6;
+let currPreferencesId = toArray(DB.preferences).length;
 let currUserId = 1000;
 let currChatId = 4;
-let currMsgId = 8;
+let currMsgId = toArray(DB.messages).length;
 
 // *********************************** USERS ************************************
 // {

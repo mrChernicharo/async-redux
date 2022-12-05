@@ -17,11 +17,27 @@ function Message({ message, userId }) {
 }
 
 function MessagesDisplay({ userId, messages }) {
+	const messagePaneRef = useRef(null);
+
+	if (messagePaneRef.current && messages) {
+		console.log({ el: messagePaneRef.current?.scrollHeight || 0 });
+
+		setTimeout(() => {
+			messagePaneRef.current.scrollTo({
+				top: 999_999,
+			});
+		}, 10);
+	}
+
 	return (
-		<div className="border h-[calc(100vh-400px)] overflow-y-scroll">
-			{messages.map(message => (
-				<Message key={message.id} message={message} userId={userId} />
-			))}
+		<div className="relative border h-[calc(100vh-200px)] ">
+			<div
+				ref={messagePaneRef}
+				className="absolute bottom-0 w-full border max-h-[calc(100vh-200px)] overflow-y-auto">
+				{messages.map(message => (
+					<Message key={message.id} message={message} userId={userId} />
+				))}
+			</div>
 		</div>
 	);
 }
@@ -34,23 +50,32 @@ function MessageInput({ userId, chatId }) {
 		{ isLoading: isSending, isSuccess, data: sentMessage }, // This is the destructured mutation result
 	] = usePostMessageMutation();
 
-	if (isSuccess) {
-		console.log({ sentMessage });
-	}
-
 	return (
-		<div className="h-[100px]">
+		<div className="">
 			<div className="h-[150px]">
 				<textarea
 					ref={textRef}
-					className="w-full h-full bg-slate-600 resize-none"
+					className="w-full h-full p-2 bg-slate-600 resize-none"
+					onKeyUp={e => {
+						e.preventDefault();
+						if (
+							e.key === "Enter" &&
+							textRef.current.value.replace(/\n/g, "")
+						) {
+							postMessage({ userId, chatId, body: textRef.current.value });
+							textRef.current.value = "";
+						}
+					}}
 				/>
 			</div>
-			<div className="flex justify-end">
+			<div className="flex justify-end border">
 				<button
-					className="w-20 mt-2 mr-2 rounded-full bg-cyan-700 p-1"
+					className="w-20 mt-2 mb-1.5 mr-2 rounded-full bg-cyan-700 p-1"
 					onClick={() => {
-						postMessage({ userId, chatId, body: textRef.current.value });
+						if (textRef.current.value) {
+							postMessage({ userId, chatId, body: textRef.current.value });
+							textRef.current.value = "";
+						}
 					}}>
 					{isSending ? "Sending..." : "Send"}
 				</button>
@@ -65,10 +90,8 @@ function Messages({ userId, chatId }) {
 
 	if (messagesLoading) return <div>Loading...</div>;
 
-	console.log(JSON.stringify({ messages }, null, 2));
-
 	return (
-		<div className="border col-start-3 col-end-7 grow">
+		<div>
 			<MessagesDisplay userId={userId} messages={messages} />
 
 			<MessageInput userId={userId} chatId={chatId} />

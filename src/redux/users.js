@@ -6,7 +6,7 @@ export const usersApi = createApi({
 	endpoints: builder => ({
 		getAllUsers: builder.query({
 			query: () => `users`,
-			providesTags: (result, error) => ["Users"],
+			providesTags: (result, error) => [{ type: "Users", id: "LIST" }],
 		}),
 		getUserById: builder.query({
 			query: id => id && `users/${id}`,

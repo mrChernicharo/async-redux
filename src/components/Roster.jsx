@@ -10,10 +10,8 @@ function Roster({ userId, chatId, setChatId }) {
 
 	if (chatsLoading) return <div>...Loading Chats</div>;
 
-	// console.log({ chats, chatId });
-
 	return (
-		<ul className="border col-start-1 col-end-3">
+		<ul className="col-start-1 col-end-3">
 			<li className="text-right">{`${currChat.name ?? ""}`}</li>
 			{chats.map(c => (
 				<li
