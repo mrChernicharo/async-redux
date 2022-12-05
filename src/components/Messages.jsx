@@ -1,14 +1,21 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useGetChatMessagesQuery, usePostMessageMutation } from "../redux/messages";
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import {
+	useGetChatMessagesQuery,
+	usePostMessageMutation,
+} from '../redux/messages';
 
 function Message({ message, userId }) {
 	return (
 		<div
 			className="bg-green-700 my-2 py-1 px-2 rounded w-2/3"
 			style={{
-				background: message.sender.id == userId ? "rgb(21, 128, 61)" : "#444",
-				marginInline: message.sender.id == userId ? "auto 1rem" : "1rem auto",
-			}}>
+				background:
+					message.sender.id == userId ? 'rgb(21, 128, 61)' : '#444',
+				marginInline:
+					message.sender.id == userId ? 'auto 1rem' : '1rem auto',
+			}}
+		>
 			<div>{message.sender.name}</div>
 			<div>{message.body}</div>
 			<small>{new Date(message.timestamp).toLocaleString()}</small>
@@ -16,7 +23,7 @@ function Message({ message, userId }) {
 	);
 }
 
-function MessagesDisplay({ userId, messages }) {
+function MessagesDisplay({ messages, userId }) {
 	const messagePaneRef = useRef(null);
 
 	if (messagePaneRef.current && messages) {
@@ -33,9 +40,14 @@ function MessagesDisplay({ userId, messages }) {
 		<div className="relative border h-[calc(100vh-200px)] ">
 			<div
 				ref={messagePaneRef}
-				className="absolute bottom-0 w-full border max-h-[calc(100vh-200px)] overflow-y-auto">
+				className="absolute bottom-0 w-full border max-h-[calc(100vh-200px)] overflow-y-auto"
+			>
 				{messages.map(message => (
-					<Message key={message.id} message={message} userId={userId} />
+					<Message
+						key={message.id}
+						message={message}
+						userId={userId}
+					/>
 				))}
 			</div>
 		</div>
@@ -59,11 +71,15 @@ function MessageInput({ userId, chatId }) {
 					onKeyUp={e => {
 						e.preventDefault();
 						if (
-							e.key === "Enter" &&
-							textRef.current.value.replace(/\n/g, "")
+							e.key === 'Enter' &&
+							textRef.current.value.replace(/\n/g, '')
 						) {
-							postMessage({ userId, chatId, body: textRef.current.value });
-							textRef.current.value = "";
+							postMessage({
+								userId,
+								chatId,
+								body: textRef.current.value,
+							});
+							textRef.current.value = '';
 						}
 					}}
 				/>
@@ -73,18 +89,26 @@ function MessageInput({ userId, chatId }) {
 					className="w-20 mt-2 mb-1.5 mr-2 rounded-full bg-cyan-700 p-1"
 					onClick={() => {
 						if (textRef.current.value) {
-							postMessage({ userId, chatId, body: textRef.current.value });
-							textRef.current.value = "";
+							postMessage({
+								userId,
+								chatId,
+								body: textRef.current.value,
+							});
+							textRef.current.value = '';
 						}
-					}}>
-					{isSending ? "Sending..." : "Send"}
+					}}
+				>
+					{isSending ? 'Sending...' : 'Send'}
 				</button>
 			</div>
 		</div>
 	);
 }
 
-function Messages({ userId, chatId }) {
+function Messages() {
+	const userId = useSelector(state => state.appState.userId);
+	const chatId = useSelector(state => state.appState.chatId);
+
 	const { isLoading: messagesLoading, data: messages } =
 		useGetChatMessagesQuery(chatId);
 

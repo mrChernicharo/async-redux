@@ -1,17 +1,21 @@
-import { useEffect } from "react";
-import { useGetUserChatsQuery } from "../redux/chats";
-import { useGetUserByIdQuery } from "../redux/users";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setChatId, setUserId } from '../redux/appState';
+import { useGetUserChatsQuery } from '../redux/chats';
+import { useGetUserByIdQuery } from '../redux/users';
 
-function UserSection({ userId, setUserId, setChatId }) {
+function UserSection() {
+	const dispatch = useDispatch();
+
+	const userId = useSelector(state => state.appState.userId);
+
 	const { isLoading: userLoading, data: user } = useGetUserByIdQuery(userId);
-	const { isLoading: chatsLoading, data: chats } = useGetUserChatsQuery(userId);
+	const { isLoading: chatsLoading, data: chats } =
+		useGetUserChatsQuery(userId);
 
 	useEffect(() => {
-		if (!user) {
-			console.log("oops");
-		}
 		if (user && chats[0]) {
-			setChatId(chats[0].id);
+			dispatch(setChatId(chats[0].id));
 		}
 	}, [chats]);
 
@@ -24,14 +28,14 @@ function UserSection({ userId, setUserId, setChatId }) {
 			<div className="flex justify-between">
 				<div>{user?.name}</div>
 				<label htmlFor="user-id">
-					user id:{" "}
+					user id:{' '}
 					<input
 						id="user-id"
 						className="w-20 bg-slate-600"
 						defaultValue={userId}
 						onChange={e => {
-							setChatId(null);
-							setUserId(e.target.value || 0);
+							dispatch(setChatId(null));
+							dispatch(setUserId(e.target.value || 0));
 						}}
 					/>
 				</label>
